@@ -45,11 +45,12 @@ in {
     (mkIf (config.programs.zsh.enable) {
       programs.zsh = {
         shellAliases = cfg.aliases;
-      };
 
         initExtra = mkIf (cfg.scriptDir != null) ''
           PATH="$PATH:${toString cfg.scriptDir}"
         '';
+      };
+
     })
   ];
 }
