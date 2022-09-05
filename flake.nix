@@ -1,5 +1,5 @@
 {
-  description = "Home Manager module that enables shell aliases for any shell that's enabled in Home Manager (bash, zsh, fish)";
+  description = "Home Manager module that takes shell-independent configuration and applies it to all enabled shells (bash, zsh, fish)";
 
   # TODO: Is it necessary? I don't think I use any package
   inputs = {
@@ -7,6 +7,6 @@
   };
 
   outputs = { self, nixpkgs }: {
-    nixosModules.aliases = import ./default.nix; 
+    nixosModules.shell = import ./default.nix; 
   };
 }
