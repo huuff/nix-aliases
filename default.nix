@@ -37,7 +37,8 @@ in {
         shellAliases = cfg.aliases;
 
         shellInit = mkIf (cfg.scriptDir != null) ''
-          PATH="$PATH:${toString cfg.scriptDir}"
+          fish_add_path ${toString cfg.scriptDir}
+
         '';
       };
     })
