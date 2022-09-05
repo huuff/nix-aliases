@@ -36,7 +36,7 @@ in {
       programs.fish = {
         shellAliases = cfg.aliases;
 
-        initExtra = mkIf (cfg.scriptDir != null) ''
+        shellInit = mkIf (cfg.scriptDir != null) ''
           PATH="$PATH:${toString cfg.scriptDir}"
         '';
       };
