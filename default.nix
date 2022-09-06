@@ -5,20 +5,20 @@ with types;
 
 let
   cfg = config.programs.shell;
-  shellDiscriminatedModule = type: submodule {
+  shellDiscriminatedModule = submodule {
     options = {
       bash = mkOption {
-        type = nullOr type;
+        type = nullOr (either (str path));
         description = "bash value for this specific configuration";
         default = null;
       };
       zsh = mkOption {
-        type = nullOr type;
+        type = nullOr (either (str path));
         description = "zsh value for this specific configuration";
         default = null;
       };
       fish = mkOption {
-        type = nullOr type;
+        type = nullOr (either (str path));
         description = "fish value for this specific configuratioN";
         default = null;
       };
@@ -40,7 +40,7 @@ in {
 
     # TODO: For fish and zsh
     completionsDir = mkOption {
-      type = nullOr (shellDiscriminatedModule (either (path str)));
+      type = shellDiscriminatedModule;
       default = null;
       description = "Directories where your completion scripts lie";
     };
