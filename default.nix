@@ -8,17 +8,17 @@ let
   shellDiscriminatedModule = submodule {
     options = {
       bash = mkOption {
-        type = nullOr (either (str path));
+        type = nullOr (oneOf [str path]);
         description = "bash value for this specific configuration";
         default = null;
       };
       zsh = mkOption {
-        type = nullOr (either (str path));
+        type = nullOr (oneOf [str path]);
         description = "zsh value for this specific configuration";
         default = null;
       };
       fish = mkOption {
-        type = nullOr (either (str path));
+        type = nullOr (oneOf [str path]);
         description = "fish value for this specific configuratioN";
         default = null;
       };
