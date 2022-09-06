@@ -38,6 +38,7 @@ in {
       description = "Directory where you hold your scripts, so it gets added to the $PATH";
     };
 
+    # TODO: For fish and zsh
     completionsDir = mkOption {
       type = nullOr (shellDiscriminatedModule (either (path str)));
       default = null;
@@ -56,7 +57,7 @@ in {
         '';
       };
 
-      home.file.".local/share/bash_completion".source = mkIf (cfg.completionsDir != null && cfg.completionsDirbash != null) cfg.completionsDir.bash;
+      home.file.".local/share/bash_completion".source = mkIf (cfg.completionsDir != null && cfg.completionsDirbash != null) config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.bash;
     })
 
     (mkIf (config.programs.fish.enable) {
@@ -65,7 +66,6 @@ in {
 
         shellInit = mkIf (cfg.scriptDir != null) ''
           fish_add_path ${toString cfg.scriptDir}
-
         '';
       };
     })
