@@ -5,20 +5,20 @@ with types;
 
 let
   cfg = config.programs.shell;
-  shellDiscriminatedModule = submodule {
+  shellDiscriminatedModule = type: submodule {
     options = {
       bash = mkOption {
-        type = nullOr (oneOf [str path]);
+        type = nullOr type;
         description = "bash value for this specific configuration";
         default = null;
       };
       zsh = mkOption {
-        type = nullOr (oneOf [str path]);
+        type = nullOr type;
         description = "zsh value for this specific configuration";
         default = null;
       };
       fish = mkOption {
-        type = nullOr (oneOf [str path]);
+        type = nullOr type;
         description = "fish value for this specific configuratioN";
         default = null;
       };
@@ -33,14 +33,15 @@ in {
     }; 
 
     scriptDir = mkOption {
-      type = nullOr (either str path);
+      type = nullOr (oneOf [str path]);
       default = null;
       description = "Directory where you hold your scripts, so it gets added to the $PATH";
     };
 
     # TODO: For fish and zsh
+    # TODO: Accept a derivation?
     completionsDir = mkOption {
-      type = shellDiscriminatedModule;
+      type = shellDiscriminatedModule (oneOf [str path]);
       default = null;
       description = "Directories where your completion scripts lie";
     };
