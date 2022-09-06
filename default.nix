@@ -57,9 +57,9 @@ in {
         '';
       };
 
-      home.file.".local/share/bash_completion" = mkIf (cfg.completionsDir != null && cfg.completionsDir.bash != null) {
-         source = config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.bash;
-      };
+      #home.file.".local/share/bash_completion" = mkIf (cfg.completionsDir != null && cfg.completionsDir.bash != null) {
+         #source = config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.bash;
+      #};
     })
 
     (mkIf (config.programs.fish.enable) {
