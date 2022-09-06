@@ -38,7 +38,7 @@ in {
     };
 
     completionsDir = mkOption {
-      type = nullOr shellDiscriminatedModule;
+      type = nullOr (shellDiscriminatedModule (either (path str)));
       default = null;
       description = "Directories where your completion scripts lie";
     };
