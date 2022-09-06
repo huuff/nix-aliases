@@ -38,7 +38,7 @@ in {
       description = "Directory where you hold your scripts, so it gets added to the $PATH";
     };
 
-    # TODO: For fish and zsh
+    # TODO: For zsh
     # TODO: Accept a derivation?
     completionsDir = mkOption {
       type = shellDiscriminatedModule (oneOf [str path]);
@@ -70,6 +70,10 @@ in {
         shellInit = mkIf (cfg.scriptDir != null) ''
           fish_add_path ${toString cfg.scriptDir}
         '';
+      };
+
+      home.file.".config/fish/completions" = mkIf (cfg ? completionsDir && cfg.completionsDir ? fish) {
+         source = config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.fish;
       };
     })
 
