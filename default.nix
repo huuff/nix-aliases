@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
 with lib;
+with types;
 
 let
   cfg = config.programs.shell;
@@ -24,7 +25,7 @@ let
     };
   };
 in {
-  options.programs.shell = with types; {
+  options.programs.shell = {
     aliases = mkOption {
       type = attrsOf str;
       default = {};
