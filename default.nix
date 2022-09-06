@@ -56,7 +56,7 @@ in {
         '';
       };
 
-      home.file.".local/share/bash_completion".target = mkIf (cfg ? completionsDir && cfg.completionsDir ? bash) cfg.completionsDir.bash;
+      home.file.".local/share/bash_completion".source = mkIf (cfg ? completionsDir && cfg.completionsDir ? bash) cfg.completionsDir.bash;
     })
 
     (mkIf (config.programs.fish.enable) {
