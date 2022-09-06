@@ -57,7 +57,7 @@ in {
         '';
       };
 
-      home.file.".local/share/bash_completion".source = mkIf (cfg.completionsDir != null && cfg.completionsDirbash != null) config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.bash;
+      home.file.".local/share/bash_completion".source = mkIf (cfg.completionsDir != null && cfg.completionsDirbash != null) (config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.bash);
     })
 
     (mkIf (config.programs.fish.enable) {
