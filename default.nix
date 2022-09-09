@@ -58,7 +58,7 @@ in {
         '';
       };
 
-      home.file.".local/share/bash_completion/completions" = mkIf (cfg ? completionsDir && cfg.completionsDir ? bash) {
+      home.file.".local/share/bash-completion/completions" = mkIf (cfg ? completionsDir && cfg.completionsDir ? bash) {
          source = config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.bash;
       };
     })
