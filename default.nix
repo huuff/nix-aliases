@@ -81,10 +81,10 @@ in {
       programs.zsh = {
         shellAliases = cfg.aliases;
 
-        initExtra = builtins.concatStringsSep "\n" [
+        initExtra = (builtins.concatStringsSep "\n" [
             optionalString (cfg.scriptDir != null) ''PATH="$PATH:${toString cfg.scriptDir}''
             optionalString (cfg ? completionsDir && cfg.completionsDir ? zsh) ''fpath=("${cfg.completionsDir.zsh}" $fpath)''
-        ];
+        ]);
       };
     })
   ];
