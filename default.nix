@@ -82,8 +82,8 @@ in {
         shellAliases = cfg.aliases;
 
         initExtra = (concatStringsSep "\n" [
-            optionalString (cfg.scriptDir != null) ''PATH="$PATH:${toString cfg.scriptDir}''
-            #optionalString (cfg ? completionsDir && cfg.completionsDir ? zsh) ''fpath=("${cfg.completionsDir.zsh}" $fpath)''
+            (optionalString (cfg.scriptDir != null) ''PATH="$PATH:${toString cfg.scriptDir}'')
+            (optionalString (cfg ? completionsDir && cfg.completionsDir ? zsh) ''fpath=("${cfg.completionsDir.zsh}" $fpath)'')
         ]);
       };
     })
