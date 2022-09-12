@@ -57,8 +57,7 @@ in {
         '';
       };
 
-      # TODO: Make cfg ? completionsDir && cfg.completionsDir ? «shell» something better (a function?)
-      home.file.".local/share/bash-completion/completions" = mkIf (cfg ? completionsDir && cfg.completionsDir ? bash) {
+      home.file.".local/share/bash-completion/completions" = mkIf (cfg.completionsDir.bash != null) {
          source = config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.bash;
       };
     })
@@ -72,7 +71,7 @@ in {
         '';
       };
 
-      home.file.".config/fish/completions" = mkIf (cfg ? completionsDir && cfg.completionsDir ? fish) {
+      home.file.".config/fish/completions" = mkIf (cfg.completionsDir.fish != null) {
          source = config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.fish;
       };
     })
