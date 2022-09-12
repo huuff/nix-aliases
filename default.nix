@@ -83,7 +83,7 @@ in {
 
         initExtra = (concatStringsSep "\n" [
             (optionalString (cfg.scriptDir != null) ''PATH="$PATH:${toString cfg.scriptDir}"'')
-            (optionalString (hasAttrByPath [ "completionsDir" "zsh" ]) ''fpath=("${cfg.completionsDir.zsh}" $fpath)'')
+            (optionalString (hasAttrByPath [ "completionsDir" "zsh" ] cfg) ''fpath=("${cfg.completionsDir.zsh}" $fpath)'')
         ]);
       };
     })
