@@ -38,7 +38,6 @@ in {
       description = "Directory where you hold your scripts, so it gets added to the $PATH";
     };
 
-    # TODO: For zsh
     # TODO: Accept a derivation?
     completionsDir = mkOption {
       type = shellDiscriminatedModule (oneOf [str path]);
@@ -58,6 +57,7 @@ in {
         '';
       };
 
+      # TODO: Make cfg ? completionsDir && cfg.completionsDir ? «shell» something better (a function?)
       home.file.".local/share/bash-completion/completions" = mkIf (cfg ? completionsDir && cfg.completionsDir ? bash) {
          source = config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.bash;
       };
@@ -81,11 +81,14 @@ in {
       programs.zsh = {
         shellAliases = cfg.aliases;
 
-        initExtra = mkIf (cfg.scriptDir != null) ''
-          PATH="$PATH:${toString cfg.scriptDir}"
-        '';
+        initExtra = 
+            optionalString (cfg.scriptDir != null) ''
+            PATH="$PATH:${toString cfg.scriptDir}"
+          ''
+            ++ optionalString (cfg ? completionsDir && cfg.completionsDir ? zsh) ''
+            fpath=("${cfg.completionsDir.zsh}" $fpath)
+          '';
       };
-
     })
   ];
 }
