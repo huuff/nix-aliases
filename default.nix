@@ -47,6 +47,7 @@ in {
   };
 
   # TODO: Make a lib to automate creating this structure, it'll be nice for implementing, for example, thefuck
+  # TODO: Try to remove all these `toString` in the paths
   config = mkMerge [
     (mkIf (config.programs.bash.enable) {
       programs.bash = {
@@ -67,9 +68,10 @@ in {
       programs.fish = {
         shellAliases = cfg.aliases;
 
-        shellInit = mkIf (cfg.scriptDir != null) ''
-          fish_add_path ${toString cfg.scriptDir}
-        '';
+        shellInit = (concatStringsSep "\n" [
+          (optionalString (cfg.scriptDir != null) ''fish_add_path "${toString cfg.scriptDir}"'')
+          (optionalString (cfg.completionsDir.fish != null) ''set -p fish_complete_path "${toString cfg.completionsDir.fish}"'')
+        ]);
       };
 
       home.file.".config/fish/completions" = mkIf (cfg.completionsDir.fish != null) {
