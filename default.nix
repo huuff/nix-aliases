@@ -57,9 +57,17 @@ in {
         '';
       };
 
-      home.file.".local/share/bash-completion/completions" = mkIf (cfg.completionsDir.bash != null) {
-         source = config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.bash;
-      };
+      #home.file.".local/share/bash-completion/completions" = mkIf (cfg.completionsDir.bash != null) {
+         #source = config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.bash;
+      #};
+
+      initExtra = (concatStringsSep "\n" [
+        (optionalString (cfg.completionsDir.bash != null) ''
+          for compfile in ${cfg.completionsDir.bash}/*; do
+            source "$compfile"
+          done
+        '')
+      ]);
     })
 
     (mkIf (config.programs.fish.enable) {
