@@ -56,15 +56,11 @@ in {
           (optionalString (cfg.scriptDir != null) ''PATH="$PATH:${toString cfg.scriptDir}"'')
           (optionalString (cfg.completionsDir.bash != null) ''
             for compfile in ${cfg.completionsDir.bash}/*; do
-              source "$compfile"
+              [ -f "$compfile" ] && source "$compfile"
             done
           '')
         ]);
       };
-
-      #home.file.".local/share/bash-completion/completions" = mkIf (cfg.completionsDir.bash != null) {
-         #source = config.lib.file.mkOutOfStoreSymlink cfg.completionsDir.bash;
-      #};
     })
 
     (mkIf (config.programs.fish.enable) {
