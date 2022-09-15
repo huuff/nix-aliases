@@ -47,14 +47,13 @@ in {
   };
 
   # TODO: Make a lib to automate creating this structure, it'll be nice for implementing, for example, thefuck
-  # TODO: Try to remove all these `toString` in the paths
   config = mkMerge [
     (mkIf (config.programs.bash.enable) {
       programs.bash = {
         shellAliases = cfg.aliases;
 
         initExtra = (concatStringsSep "\n" [
-          (optionalString (cfg.scriptDir != null) ''PATH="$PATH:${toString cfg.scriptDir}"'')
+          (optionalString (cfg.scriptDir != null) ''PATH="$PATH:${cfg.scriptDir}"'')
           (optionalString (cfg.completionsDir.bash != null) ''
             for compfile in ${cfg.completionsDir.bash}/*; do
               [ -f "$compfile" ] && source "$compfile"
@@ -69,8 +68,8 @@ in {
         shellAliases = cfg.aliases;
 
         shellInit = (concatStringsSep "\n" [
-          (optionalString (cfg.scriptDir != null) ''fish_add_path "${toString cfg.scriptDir}"'')
-          (optionalString (cfg.completionsDir.fish != null) ''set -p fish_complete_path "${toString cfg.completionsDir.fish}"'')
+          (optionalString (cfg.scriptDir != null) ''fish_add_path "${cfg.scriptDir}"'')
+          (optionalString (cfg.completionsDir.fish != null) ''set -p fish_complete_path "${cfg.completionsDir.fish}"'')
         ]);
       };
 
@@ -84,7 +83,7 @@ in {
         shellAliases = cfg.aliases;
 
         initExtra = (concatStringsSep "\n" [
-            (optionalString (cfg.scriptDir != null) ''PATH="$PATH:${toString cfg.scriptDir}"'')
+            (optionalString (cfg.scriptDir != null) ''PATH="$PATH:${cfg.scriptDir}"'')
             (optionalString (cfg.completionsDir.zsh != null) ''fpath=("${cfg.completionsDir.zsh}" $fpath)'')
         ]);
       };
